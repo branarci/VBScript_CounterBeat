@@ -56,24 +56,41 @@ Do While True
 				aData(cnDirection) = 1
 			End If
 
-			'used to add a bar for each digit in the value
-			'after the value printed to console
+			'used to add a different bar for each digit in the value
+			'after the value is printed to the console
 			'to display a more graphical representation of the value
+			'placeholders for value of the digit
 			digit1 = 0
 			digit2 = 0
 			digit3 = 0
+			'placeholders for the resulting accumulation of bars per digit
 			bar1 = ""
 			bar2 = ""
 			bar3 = ""
+			'placeholder for the result of all digits with a tab at the beginning
 			bar = vbTab
 			
+			'if 3 or more digits
 			If(Len(CStr(aData(cnValue))) > 2) Then
+				'multiple functions used
+				'aData - get the value from the aData array
+				'CStr - convert the result into a string
+				'Trim - trim the string
+				'	- probably not necessary but had error at one point that this solved
+				'Mid - get the first character in the string
 				digit1string = Mid(Trim(CStr(aData(cnValue))), 1, 1)
+				'convert back into integer
 				digit1 = CInt(digit1string)
+				'constructs a string of the relevant amount of bars
 				For i = 0 To digit1
 					bar1 = bar1 + "|"
 				Next
+				'removes the first character in the string
+				'	- had an error and way of fixing it was to 
+				'	- make i start at 0 instead of 1
+				'	- so this removes the extra bar
 				bar1 = Right(bar1, Len(bar1)-1)
+				'adds the tab to the beginning of the bars
 				bar = bar + bar1
 				
 				digit2string = Mid(Trim(CStr(aData(cnValue))), 2, 1)
@@ -95,6 +112,7 @@ Do While True
 				If(aData(cnValue) > 999) Then
 					bar = bar + "*"
 				End If
+			'if 2 or more digits
 			ElseIf(Len(CStr(aData(cnValue))) > 1) Then
 				digit1string = Mid(Trim(CStr(aData(cnValue))), 1, 1)
 				digit1 = CInt(digit1string)
@@ -111,6 +129,7 @@ Do While True
 				Next
 				bar2 = Right(bar2, Len(bar2)-1)
 				bar = bar + bar2
+			if 1 or more digits
 			ElseIf(Len(CStr(aData(cnValue))) > 0) Then
 				digit1string = Mid(Trim(CStr(aData(cnValue))), 1, 1)
 				digit1 = CInt(digit1string)
@@ -119,6 +138,7 @@ Do While True
 				Next
 				bar1 = Right(bar1, Len(bar1)-1)
 				bar = bar + bar1
+			if something went wrong
 			Else
 				bar = "***"
 			End If
